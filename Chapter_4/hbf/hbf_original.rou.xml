@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Mi 06 Apr 2022 15:39:17 CEST by Eclipse SUMO netedit Version 1.4.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <sumo-net-file value="/home2/zhihao.li/carla-rss/Co-Simulation/Sumo/examples/hbf/hbf.net.xml"/>
+    </input>
+
+    <output>
+        <output-file value="/home2/zhihao.li/carla-rss/Co-Simulation/Sumo/examples/hbf/hbf.net.xml"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="false"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="5"/>
+        <junctions.limit-turn-speed value="5.5"/>
+        <rectangular-lane-cut value="true"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="false"/>
+    </pedestrian>
+
+    <netedit>
+        <route-files value="/home2/zhihao.li/carla-rss/Co-Simulation/Sumo/examples/hbf/hbf_original.rou.xml"/>
+    </netedit>
+
+    <report>
+        <aggregate-warnings value="5"/>
+    </report>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="CarA" length="5.00" minGap="2.50" maxSpeed="50.00" carFollowModel="IDM" accel="6.0" decel="6.0" tau="1.0"/>
+    <vType id="CarB" length="7.50" minGap="2.50" maxSpeed="50.00" carFollowModel="IDM" accel="2.0" decel="6.0" tau="1.0"/>
+    <vType id="CarC" length="5.00" minGap="2.50" maxSpeed="40.00" carFollowModel="IDM" accel="1.0" decel="5.0" tau="1.0"/>
+    <vType id="CarD" length="7.50" minGap="2.50" maxSpeed="20.00" carFollowModel="IDM" accel="1.0" decel="5.0" tau="1.0"/>
+    <route edges="-2327.0.00 -2302.0.00 -2299.0.00 -2301.0.00 -2291.0.00 -2290.0.00 -2289.0.00 -2261.0.00 -2513.0.00 -2383.0.00 -2384.0.00 -2403.0.00 -2411.0.00 -2576.0.00 -2577.0.00 -2548.0.00 -2450.0.00" color="yellow" id="route_0"/>
+    <route edges="-2394.0.00 -2395.0.00 -2638.0.00 -2639.0.00 -2508.0.00 -2380.0.00 -2434.0.00 -2635.0.00 -2506.0.00 -2643.0.00 -2644.0.00 -2470.0.00 -2385.0.00 -2509.0.00 -2510.0.00 -2511.0.00 -2537.0.00 -2538.0.00 -2539.0.00 -2586.0.00 -2597.0.00 -2598.0.00 -2572.0.00 -2475.0.00" color="green" id="route_1"/>
+    <vehicle id="vehicle_0" type="CarA" depart="0.00" departLane="first" color="yellow" route="route_0"/>
+    <vehicle id="vehicle_1" type="CarD" depart="0.00" departLane="free" color="blue" route="route_0"/>
+    <vehicle id="vehicle_2" type="CarD" depart="0.00" departLane="first" departPos="free" route="route_0"/>
+    <vehicle id="vehicle_3" type="CarA" depart="0.00" departLane="first" color="blue" route="route_0"/>
+    <vehicle id="vehicle_4" type="CarC" depart="0.00" departLane="free" color="red" route="route_0"/>
+    <vehicle id="vehicle_5" type="CarD" depart="0.00" departLane="first" departPos="free" color="green" route="route_0"/>
+    <vehicle id="vehicle_6" depart="0.00" route="route_1"/>
+</routes>
