@@ -9,7 +9,7 @@ This repository contains all example simulations on report *Investigation and Si
 
 [Chapter 3](https://github.com/zhihaode/carla_and_sumo/tree/main/Chapter_3) is simulation files for three vehicles overtaking in CARLA Simulator.
 
-[Chapter 4](https://github.com/zhihaode/carla_and_sumo/tree/main/Chapter_4) contains the simulation of the objects in SUMO
+[Chapter 4](https://github.com/zhihaode/carla_and_sumo/tree/main/Chapter_4) contains various simulations in SUMO
 
 
 ## Table of Contents
