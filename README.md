@@ -1,7 +1,7 @@
 # carla_and_sumo
 
 
-This repository contains all example simulations on report *Investigation and Simulation of the Perception of 
+This repository contains all example simulations on documentation *Investigation and Simulation of the Perception of 
 “Autonomous Driving”*
 :
 
@@ -23,7 +23,7 @@ This repository contains all example simulations on report *Investigation and Si
 
 ## Background
 
-This is a simulated code designed specifically for my report. This is taken as a reference.
+This is a simulated code designed specifically for my documentation. This is taken as a reference.
 
 ## Usage
 
