@@ -83,10 +83,10 @@ guiShape="passenger"/>
 def fix_angle_range(angle):
     '''
     return the angle between (-180°, 180°]
-    '''    
+    '''
     while(angle <= 180):
-        angle += 2 * 180;
-    
+        angle += 2 * 180
+
     angle -= 2 * 180 * int(angle / (2*180))    
     return angle > 180 and (angle - 2 * 180) or angle 
 
@@ -97,22 +97,22 @@ def get_angel_2_vehicles(ego_vehicle, ref_vehicle):
     '''
     position_ego_vehicle = traci.vehicle.getPosition(ego_vehicle)
     position_ref_vehicle = traci.vehicle.getPosition(ref_vehicle)
-    
+
     distance_x = float(position_ref_vehicle[0] - position_ego_vehicle[0])
     distance_y = float(position_ref_vehicle[1] - position_ego_vehicle[1])
-    
+
     angle_x_y = 90 - math.degrees(math.atan2(distance_y , distance_x))
-    
+
     angle_ego_vehicle = fix_angle_range(traci.vehicle.getAngle(ego_vehicle))
-    
+
     included_angle = fix_angle_range(angle_x_y - angle_ego_vehicle)
-    
+
     direction = 'straight'
     if included_angle > 0:
         direction = 'right'
     elif included_angle < 0:
         direction = 'left'
-        
+
     ref_angle = [direction, abs(included_angle)]   
     return ref_angle 
 
@@ -123,12 +123,13 @@ def get_distance_2_vehicles(vehicle_1,vehicle_2):
     '''
     position_1 = traci.vehicle.getPosition(vehicle_1)
     position_2 = traci.vehicle.getPosition(vehicle_2)
-    
+
     distance_x = position_2[0] - position_1[0]
     distance_y = position_2[1] - position_1[1]
-    
+
     distance_2d = math.sqrt( (distance_x**2) + (distance_y**2) )
     return distance_2d
+
 
 def print_leader(ego_vehicle):
     '''
@@ -140,6 +141,7 @@ def print_leader(ego_vehicle):
         distance_leader = current_leader[1]
         angle_leader = ['straight']
         print('↑ ','vehicle_id:',leader,'  distance:',distance_leader,'  direction:',angle_leader)  
+
 
 def print_left_leaders(ego_vehicle):
     '''
@@ -154,6 +156,7 @@ def print_left_leaders(ego_vehicle):
             angle_left_leaders = get_angel_2_vehicles(ego_vehicle, left_leaders)
             print('↖ ','vehicle_id:',left_leaders,'  distance:',distance_left_leaders,'  direction:',angle_left_leaders)   
 
+
 def print_left_followers(ego_vehicle):
     '''
     print information for all left follower vehicles
@@ -166,7 +169,8 @@ def print_left_followers(ego_vehicle):
             # distance_left_followers = current_left_followers[i][1]
             angle_left_followers = get_angel_2_vehicles(ego_vehicle, left_followers)
             print('↙ ','vehicle_id:',left_followers,'  distance:',distance_left_followers,'  direction:',angle_left_followers) 
-        
+
+
 def print_right_leaders(ego_vehicle):
     '''
     print information for all right leader vehicles
@@ -179,7 +183,8 @@ def print_right_leaders(ego_vehicle):
             # distance_right_leaders = current_right_leaders[i][1]
             angle_right_leaders = get_angel_2_vehicles(ego_vehicle, right_leaders)
             print('↗ ','vehicle_id:',right_leaders,'  distance:',distance_right_leaders,'  direction:',angle_right_leaders)  
-    
+
+
 def print_right_followers(ego_vehicle):
     '''
     print information for all right follower vehicles
@@ -193,6 +198,7 @@ def print_right_followers(ego_vehicle):
             angle_right_followers = get_angel_2_vehicles(ego_vehicle, right_followers)
             print('↘ ','vehicle_id:',right_followers,'  distance:',distance_right_followers,'  direction:',angle_right_followers) 
 
+
 def print_all_neighbors(ego_vehicle):
     '''
     print information for all neighbor vehicles
@@ -204,24 +210,25 @@ def print_all_neighbors(ego_vehicle):
     print_right_leaders(ego_vehicle)
     print_right_followers(ego_vehicle)
 
+
 def run():
     """execute the TraCI control loop"""
     step = 0
-    
+
     # read networl information through sumolib
     sumo_net = sumolib.net.readNet('hbf.net.xml')
-    
+
     # set 'vehicle_0' as ego vehicle
     ego_vehicle = 'vehicle_0'
-    
+
     # start looping in steps until all vehicles have completed their path
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        
+
         print(step)
-        
+
         try:
-            
+
             # print the current x,y-coordinates of the vehicle
             current_x_y_position = traci.vehicle.getPosition(ego_vehicle)
             print('x_y_position: ',current_x_y_position)
@@ -231,24 +238,24 @@ def run():
             y_0 = current_x_y_position[1]
             current_gps_position = sumo_net.convertXY2LonLat(float(x_0), float(y_0))
             print('gps_position: ',current_gps_position)
-            
+
             # print the current angle of the vehicle's orientation in Cartesian coordinates
             current_angle = traci.vehicle.getAngle(ego_vehicle)
             current_angle = fix_angle_range(90 - current_angle)
             print('ego_angle: ',current_angle)
-            
+
             # print the current speed of the vehicle
             current_speed = traci.vehicle.getSpeed(ego_vehicle)
             print('ego_speed: ',current_speed)          
-            
+
             # print information for all neighbor vehicles of ego vehicle 
             print_all_neighbors(ego_vehicle)
 
         except:
-            
+
             # if ego vehicle is not in the network
             print('ego vehicle is not in the network')
-        
+
         step += 1
     traci.close()
     sys.stdout.flush()
