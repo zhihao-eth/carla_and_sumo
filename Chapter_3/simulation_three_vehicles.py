@@ -71,14 +71,14 @@ def main():
         client.set_timeout(10.0)
 
         world = client.load_world('Town06')
-        
+
 
         # set sync mode
         settings = world.get_settings()
         settings.synchronous_mode = True
         settings.fixed_delta_seconds = 0.05
         world.apply_settings(settings)
-        
+
         # set weather
         weather = carla.WeatherParameters(cloudiness=10.0,
                                           precipitation=0.0,
@@ -90,19 +90,18 @@ def main():
         # Traffic manager and its sync mode
         tm = client.get_trafficmanager(8000)
         tm.set_synchronous_mode(True) 
-        
-        
+
         # The world contains the list blueprints that we can use for adding new
         # actors into the simulation.
-        
+
         blueprint_library = world.get_blueprint_library()
-        
+
         spawn_points = world.get_map().get_spawn_points()
         random.shuffle(spawn_points)
-        
-        
+
+
         picked_spawn_points = []
-        
+
         #Spawn an actor at specified point by using Transform
         #lag Vehicle
         spawn_point_v1 = Transform(Location(x=590.297424, y=-20.8, z=0.285300), 
@@ -117,16 +116,16 @@ def main():
         # let's randomize its color.
         if vehicle1_bp.has_attribute('color'):
             vehicle1_bp.set_attribute('color', '255,255,255')
-            
+
         # Now we need to give an initial transform to the vehicle. We choose a
         # random transform from the list of recommended spawn points of the map.
-                
+
         vehicle1_spawn_point = spawn_point_v1 
         vehicle1 = world.spawn_actor(vehicle1_bp, spawn_point_v1 )
         picked_spawn_points.append(spawn_point_v1 )
-        
+
         velocity1 = Vector3D(x=0, y=0, z=0)
-        
+
         vehicle1.set_target_velocity(velocity1)
 
         # So let's tell the world to spawn the vehicle.
@@ -140,11 +139,6 @@ def main():
         actor_list.append(vehicle1)
         print('created %s' % vehicle1.type_id)
 
-        # Let's put the vehicle to drive around.
-        # vehicle1.set_autopilot(True)
-        
-        
-        
         NUMBER_OF_VEHICLES = 2
 
         vehicle_bps = world.get_blueprint_library().filter('vehicle.*.*')
@@ -152,14 +146,14 @@ def main():
         vehicle_bps = [x for x in vehicle_bps if int(x.get_attribute('number_of_wheels')) == 4]
 
         vehicle_list = []
-        
-        
+
+
         spawn_point_v2 = Transform(Location(x=598.297424, y=-20.8, z=0.285300), 
                 Rotation(pitch=0, yaw=180, roll=0))
-        
+
         spawn_point_v3 = Transform(Location(x=580.297424, y=-20.8, z=0.285300), 
                 Rotation(pitch=0, yaw=180, roll=0))
-        
+
 
         vehicle_bp = np.random.choice(vehicle_bps)
         try:
@@ -168,11 +162,11 @@ def main():
             vehicle_list.append(vehicle)
             vehicle.set_autopilot(True)
             print('created %s' % vehicle.type_id)
-                
+
         except:
             print('failed')
             pass
-        
+
         vehicle_bp = np.random.choice(vehicle_bps)
         try:
             vehicle = world.spawn_actor(vehicle_bp, spawn_point_v3)
@@ -180,7 +174,7 @@ def main():
             vehicle_list.append(vehicle)
             # vehicle.set_autopilot(True)
             print('created %s' % vehicle.type_id)
-                
+
         except:
             print('failed')
             pass
@@ -194,7 +188,7 @@ def main():
             tm.ignore_lights_percentage(v,0)
             tm.distance_to_leading_vehicle(v,0)
             tm.vehicle_percentage_speed_difference(v,70)
-            
+
         # create sensor queue
         sensor_queue = Queue(maxsize=10)
 
@@ -210,7 +204,7 @@ def main():
         # receives an image. In this example we are saving the image to disk
 
         camera.listen(lambda image: sensor_callback(image, sensor_queue, "camera"))
-        
+
 
         # we need to tick the world once to let the client update the spawn position
         world.tick()
@@ -221,46 +215,45 @@ def main():
         # set the destination spot
         destination = Transform(Location(x=-207.209152, y=247.122726, z=0.300000), 
                 Rotation(pitch=0, yaw=0, roll=0))
-        
+
         print('moved vehicle from %s' % agent._vehicle.get_location())    
         print('moved vehicle to %s' % destination.location)
 
         # generate the route
         agent.set_destination(destination.location)
-        
+
 
         while True:
             agent._update_information()
 
             world.tick()
             data = sensor_queue.get(block=True)
-            
+
             if len(agent._local_planner._waypoints_queue)<1:
                 print('======== Success, Arrivied at Target Point!')
                 break
-                
+
             # top view
             spectator = world.get_spectator()
             transform = vehicle1.get_transform()
             spectator.set_transform(carla.Transform(transform.location + carla.Location(z=40),
                                                     carla.Rotation(pitch=-90)))
-            
+
             speed_limit = vehicle1.get_speed_limit()
             agent.get_local_planner().set_speed(speed_limit)
 
             control = agent.run_step(debug=True)
             vehicle1.apply_control(control)
-            
-            
+
+
 
     finally:
-        
+
         settings = world.get_settings()
         settings.synchronous_mode = False
         settings.fixed_delta_seconds = None
         world.apply_settings(settings)
 
-        
         print('destroying actors')
         camera.destroy()
         client.apply_batch([carla.command.DestroyActor(x) for x in actor_list])
