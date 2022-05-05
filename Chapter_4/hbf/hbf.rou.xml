@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-04-20 14:49:21 by Eclipse SUMO netedit Version 1.12.0
+<!-- generated on 2022-05-05 16:27:33 by Eclipse SUMO netedit Version 1.13.0
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- VTypes -->
     <vType id="CarA" length="5.00" minGap="2.50" maxSpeed="50.00" carFollowModel="IDM" accel="6.0" decel="6.0" tau="1.0"/>
     <vType id="CarB" length="7.50" minGap="2.50" maxSpeed="50.00" carFollowModel="IDM" accel="2.0" decel="6.0" tau="1.0"/>
     <vType id="CarC" length="5.00" minGap="2.50" maxSpeed="30.00" carFollowModel="IDM" accel="2.0" decel="5.0" tau="1.0"/>
     <vType id="CarD" length="7.50" minGap="2.50" maxSpeed="20.00" carFollowModel="IDM" accel="1.0" decel="5.0" tau="1.0"/>
-    <route id="route_0" edges="-2327.0.00 -2302.0.00 -2299.0.00 -2301.0.00 -2291.0.00 -2290.0.00 -2289.0.00 -2261.0.00 -2513.0.00 -2383.0.00 -2384.0.00 -2403.0.00 -2411.0.00 -2576.0.00 -2577.0.00 -2548.0.00 -2450.0.00" color="yellow"/>
-    <route id="route_1" edges="-2394.0.00 -2395.0.00 -2638.0.00 -2639.0.00 -2508.0.00 -2380.0.00 -2434.0.00 -2635.0.00 -2506.0.00 -2643.0.00 -2644.0.00 -2470.0.00 -2385.0.00 -2509.0.00 -2510.0.00 -2511.0.00 -2537.0.00 -2538.0.00 -2539.0.00 -2586.0.00 -2597.0.00 -2598.0.00 -2572.0.00 -2475.0.00" color="green"/>
+    <!-- Routes -->
+    <route id="route_0" edges="-2327 -2302 -2299 -2301 -2291 -2290 -2289 -2261 -2513 -2383 -2384 -2403 -2411 -2576 -2577 -2548 -2450" color="yellow"/>
+    <route id="route_1" edges="-2394 -2395 -2638 -2639 -2508 -2380 -2434 -2635 -2506 -2643 -2644 -2470 -2385 -2509 -2510 -2511 -2537 -2538 -2539 -2586 -2597 -2598 -2572 -2475" color="green"/>
+    <!-- Vehicles, persons and containers (sorted by depart) -->
     <vehicle id="vehicle_0" type="CarA" depart="0.00" departLane="first" color="blue" route="route_1"/>
     <vehicle id="vehicle_1" type="CarC" depart="0.00" departLane="free" color="red" route="route_1"/>
     <vehicle id="vehicle_2" type="CarD" depart="0.00" departLane="first" departPos="free" color="green" route="route_1"/>

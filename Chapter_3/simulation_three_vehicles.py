@@ -48,7 +48,7 @@ import carla
 from carla import ColorConverter as cc
 from carla import Transform, Location, Rotation, Vector3D
 
-from behavior_agent import BehaviorAgent
+# from behavior_agent import BehaviorAgent
 from agents.navigation.behavior_agent import BehaviorAgent  # pylint: disable=import-error
 from agents.navigation.basic_agent import BasicAgent  # pylint: disable=import-error
 
